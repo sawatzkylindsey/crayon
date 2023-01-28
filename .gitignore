@@ -11,5 +11,9 @@ Cargo.lock
 
 
 # Added by cargo
-
 /target
+
+
+# Intellij
+crayon.iml
+.idea/*
