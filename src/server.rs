@@ -10,8 +10,19 @@ use tokio::fs::File;
 use tokio_util::io::ReaderStream;
 
 pub(crate) async fn run_server(port: u16, resource_root: PathBuf) {
+    let get_index = |State(resource_root): State<Arc<PathBuf>>| async {
+        get_path(State(resource_root), "index.html".to_string()).await
+    };
+    let get_interactive = |State(resource_root): State<Arc<PathBuf>>| async {
+        get_path(State(resource_root), "interactive.html".to_string()).await
+    };
+    let get_resume = |State(resource_root): State<Arc<PathBuf>>| async {
+        get_path(State(resource_root), "index.html".to_string()).await
+    };
     let application = Router::new()
         .route("/", get(get_index))
+        .route("/interactive", get(get_interactive))
+        .route("/resume", get(get_resume))
         .route("/api", get(|| async { format!("Api!") }))
         .route("/api/do_stuff", get(|| async { format!("Api do_stuff!") }))
         .fallback(get_resource)
@@ -29,12 +40,6 @@ async fn get_resource(
     req: Request<Body>,
 ) -> Result<impl IntoResponse, StatusCode> {
     get_path(State(resource_root), req.uri().path().to_string()).await
-}
-
-async fn get_index(
-    State(resource_root): State<Arc<PathBuf>>,
-) -> Result<impl IntoResponse, StatusCode> {
-    get_path(State(resource_root), "index.html".to_string()).await
 }
 
 async fn get_path(
