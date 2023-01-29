@@ -1,4 +1,3 @@
-use crate::constant::CRAYON;
 use axum::body::{Body, StreamBody};
 use axum::extract::State;
 use axum::http::{Request, StatusCode};
@@ -12,7 +11,7 @@ use tokio_util::io::ReaderStream;
 
 pub(crate) async fn run_server(port: u16, resource_root: PathBuf) {
     let application = Router::new()
-        .route("/", get(|| async { format!("Welcome to {CRAYON}!") }))
+        .route("/", get(get_index))
         .route("/api", get(|| async { format!("Api!") }))
         .route("/api/do_stuff", get(|| async { format!("Api do_stuff!") }))
         .fallback(get_resource)
@@ -29,8 +28,20 @@ async fn get_resource(
     State(resource_root): State<Arc<PathBuf>>,
     req: Request<Body>,
 ) -> Result<impl IntoResponse, StatusCode> {
-    let request_path = req.uri().path().to_string();
-    let path = PathBuf::try_from(request_path.trim_start_matches('/')).unwrap();
+    get_path(State(resource_root), req.uri().path().to_string()).await
+}
+
+async fn get_index(
+    State(resource_root): State<Arc<PathBuf>>,
+) -> Result<impl IntoResponse, StatusCode> {
+    get_path(State(resource_root), "index.html".to_string()).await
+}
+
+async fn get_path(
+    State(resource_root): State<Arc<PathBuf>>,
+    path: String,
+) -> Result<impl IntoResponse, StatusCode> {
+    let path = PathBuf::try_from(path.trim_start_matches('/')).unwrap();
     let resource_path = resource_root.join(path);
 
     let file = match resource_path.canonicalize() {
