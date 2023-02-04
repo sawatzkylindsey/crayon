@@ -1,4 +1,5 @@
 use crate::constant::CRAYON;
+use tracing::info;
 
 mod constant;
 mod parameter;
@@ -7,6 +8,7 @@ mod server;
 #[tokio::main]
 async fn main() {
     let parameters = parameter::parse();
-    println!("Running {CRAYON} {parameters:?}.");
+    tracing_subscriber::fmt::init();
+    info!("Running {CRAYON } {parameters:?}.");
     server::run_server(parameters.port, parameters.resource_root).await;
 }

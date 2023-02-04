@@ -8,6 +8,9 @@ use std::path::PathBuf;
 use std::sync::Arc;
 use tokio::fs::File;
 use tokio_util::io::ReaderStream;
+use tower_http::trace::TraceLayer;
+use tracing::debug;
+use tracing::Span;
 
 pub(crate) async fn run_server(port: u16, resource_root: PathBuf) {
     let get_index = |State(resource_root): State<Arc<PathBuf>>| async {
@@ -26,6 +29,11 @@ pub(crate) async fn run_server(port: u16, resource_root: PathBuf) {
         .route("/api", get(|| async { format!("Api!") }))
         .route("/api/do_stuff", get(|| async { format!("Api do_stuff!") }))
         .fallback(get_resource)
+        .layer(
+            TraceLayer::new_for_http().on_request(|request: &Request<Body>, _span: &Span| {
+                tracing::info!("started {} {}", request.method(), request.uri().path())
+            }),
+        )
         .with_state(Arc::new(resource_root));
 
     let address = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), port);
@@ -48,6 +56,7 @@ async fn get_path(
 ) -> Result<impl IntoResponse, StatusCode> {
     let path = PathBuf::try_from(path.trim_start_matches('/')).unwrap();
     let resource_path = resource_root.join(path);
+    debug!("get_path({resource_path:?})");
 
     let file = match resource_path.canonicalize() {
         Ok(resource_canonical) => {

@@ -1,4 +1,10 @@
 
+:root {
+    /* These will get overridden, but setting here to help the IDE interpreter. */
+    --contentWidth: 1px;
+    --svgHeight: 1px;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -8,19 +14,14 @@
 }
 
 .content {
-    margin: 0 auto;
-    padding: 0 15px;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    /*min-height: 100%;*/
+    padding: 0;
+    margin: 2rem auto;
     font-size: 18px;
 
-    max-width: calc(min(700px, 100%));
-    height: 700px;
+    max-width: calc(min(var(--contentWidth), 100%));
 
     display: flex;
     flex-direction: column;
-    /*justify-content: center;*/
 }
 
 .bar {
@@ -38,16 +39,17 @@
     top: 0;
 }
 
-/*.footer {*/
-/*    max-width: calc(min(760px, 100%));*/
-/*}*/
-
 .navigation-element {
     padding: 0 0.8rem;
     background-size: auto;
     display: flex;
     align-items: center;
     align-self: stretch;
+}
+
+svg {
+    max-width: calc(min(var(--contentWidth), 100%));
+    height: var(--svgHeight);
 }
 
 a:hover {
