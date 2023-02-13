@@ -12,20 +12,20 @@ use tower_http::trace::TraceLayer;
 use tracing::debug;
 use tracing::Span;
 
-pub(crate) async fn run_server(port: u16, resource_root: PathBuf) {
-    let get_index = |State(resource_root): State<Arc<PathBuf>>| async {
-        get_path(State(resource_root), "index.html".to_string()).await
+pub(crate) async fn run_server(port: u16, resource_root: PathBuf, home_page: String) {
+    let get_home = |State(resource_root): State<Arc<PathBuf>>| async {
+        get_path(State(resource_root), home_page).await
     };
-    let get_interactive = |State(resource_root): State<Arc<PathBuf>>| async {
-        get_path(State(resource_root), "interactive.html".to_string()).await
-    };
-    let get_resume = |State(resource_root): State<Arc<PathBuf>>| async {
-        get_path(State(resource_root), "index.html".to_string()).await
-    };
+    // let get_interactive = |State(resource_root): State<Arc<PathBuf>>| async {
+    //     get_path(State(resource_root), "interactive.html".to_string()).await
+    // };
+    // let get_resume = |State(resource_root): State<Arc<PathBuf>>| async {
+    //     get_path(State(resource_root), "resume.html".to_string()).await
+    // };
     let application = Router::new()
-        .route("/", get(get_index))
-        .route("/interactive", get(get_interactive))
-        .route("/resume", get(get_resume))
+        .route("/", get(get_home))
+        // .route("/interactive", get(get_interactive))
+        // .route("/resume", get(get_resume))
         .route("/api", get(|| async { format!("Api!") }))
         .route("/api/do_stuff", get(|| async { format!("Api do_stuff!") }))
         .fallback(get_resource)

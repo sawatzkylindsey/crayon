@@ -9,8 +9,11 @@ I'm hoping that idea is an appropriate metaphor for this project.
     cargo build
     cargo test
 
+    ./target/debug/content_generator -h
+    ./target/debug/content_generator target/resources
+
     ./target/debug/crayon -h
-    ./target/debug/crayon 8080
+    ./target/debug/crayon_server 8080 target/resources/
 
-    curl http://localhost:8080/
-
+    curl http://localhost:8080/api
+    open http://localhost:8080

@@ -1,0 +1,34 @@
+js_libraries: false
+content:
+  sections:
+    - title: "Introduction"
+      date: "2023-02-12"
+      paragraphs:
+        - "Welcome to Crayon!"
+        - "My name is Lindsey Sawatzky and this is a simple website I've built for myself.
+        When deciding a name for this project, I was imagining a bucket full of colourful crayons.
+        It's chaotic and messy, but the colours draw you in and inspire creativity.
+        I'm hoping that idea is an appropriate metaphor for this website."
+        - "I'm building this for a few reasons:
+        <ul>
+          <li>
+            As a fun way to demonstrate my work through an explorative CV.
+          </li>
+          <li>
+            For my own personal enjoyment.
+            I've liked making things my whole life, but in my youth I didn't know how to manifest my builder's desire.
+            Ever since I realized programming was a viable outlet, I've always been programming one way or the other.
+            This website is simply the next in a long line of personal builder's desire projects.
+          </li>
+          <li>
+            As a way to explore new directions for my work.
+            In recent years, I've stumbled upon diagrams & visualizations as a new facet to my creative desires.
+            I would like to start publishing some of these pieces here.
+          </li>
+        </ul>"
+        - "With that I hope you enjoy exploring.
+        Happy hunting!"
+    - title: "Filler"
+      date: "2023-02-12"
+      paragraphs:
+        - "This is some filler."

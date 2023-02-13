@@ -1,12 +1,12 @@
 
 $(document).ready(function () {
-    let svg = d3.select('svg');
-    let visualizer_root = svg.append("g");
-
     let width = Math.min(CONTENT_WIDTH, window.innerWidth);
     let height = Math.min(SVG_HEIGHT, window.innerHeight);
-    let defaultWord = "crayon";
 
+
+    let svg = d3.select('#mal-container');
+    let visualizer_root = svg.append("g");
+    let defaultWord = "crayon";
     let nameRenderer = new MountainsAndLakes(visualizer_root, width/2, height/2);
     nameRenderer.render(defaultWord);
 

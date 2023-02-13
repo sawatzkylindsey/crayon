@@ -1,0 +1,21 @@
+js_libraries: true
+content:
+  sections:
+    - title: "Name Encodings - Mountains and Lakes"
+      date: "2023-02-04"
+      paragraphs:
+        - "This is a fun visual encoding for names, or just words in general."
+        - "Chances are you are familiar with this concept; there are a number of examples on the web.
+        For myself, the first example I can think of is <a href='https://github.blog/2013-08-14-identicons/'>github's identicons</a>.
+        The idea is to procedurally generate an image/icon/avatar based off the input word."
+        - "Different encoding schemes might have different objectives, but with this one I wanted for each unique word to produce a unique rendering.
+        This way, the encoding serves as a visual representation of your name!"
+        - "This encoding lays the alphabet across a horizontal line from A to Z.
+        Then, start filled curve at each character in the input name, and end the curve at the next character.
+        Additionally, alternate from upwards curves to downwards curves, with the former coloured green and the later coloured blue.
+        Finally, fade the colour as the name progresses, to give the perception of depth.
+        The end result, I think, is something like a landscape of mountains and lakes."
+        - "Feel free to play around and try out your name!
+        As an exercise, try to figure out what the default visualized name is (without looking at the source code!)."
+        - "<input id='mal-input' class='text-box' type='text' placeholder='try me..' autocomplete='off'>"
+        - "<svg id='mal-container'></svg>"

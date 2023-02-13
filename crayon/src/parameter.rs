@@ -2,11 +2,14 @@ use crate::constant::CRAYON;
 use blarg::{CommandLineParser, Parameter, Scalar, Switch};
 use std::path::PathBuf;
 
+const DEFAULT_HOME_PAGE: &str = "home.html";
+
 #[derive(Debug)]
 pub(crate) struct Parameters {
     pub verbose: bool,
     pub port: u16,
     pub resource_root: PathBuf,
+    pub home_page: String,
 }
 
 impl Default for Parameters {
@@ -15,6 +18,7 @@ impl Default for Parameters {
             verbose: false,
             port: 80,
             resource_root: PathBuf::default(),
+            home_page: DEFAULT_HOME_PAGE.to_string(),
         }
     }
 }
@@ -28,6 +32,11 @@ pub(crate) fn parse() -> Parameters {
             Switch::new(&mut parameters.verbose, true),
             "verbose",
             Some('v'),
+        ))
+        .add(Parameter::option(
+            Scalar::new(&mut parameters.home_page),
+            "home-page",
+            None,
         ))
         .add(Parameter::argument(
             Scalar::new(&mut parameters.port),

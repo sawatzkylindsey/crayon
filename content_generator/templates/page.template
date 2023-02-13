@@ -7,30 +7,34 @@
 </head>
 <script>
     var CONTENT_WIDTH=700;
-    var SVG_HEIGHT=580;
+    var SVG_HEIGHT=500;
     var cssRoot = document.querySelector(':root');
     cssRoot.style.setProperty('--contentWidth', CONTENT_WIDTH + "px");
     cssRoot.style.setProperty('--svgHeight', SVG_HEIGHT + "px");
 </script>
-<script src="js/jquery-3.6.2.min.js"></script>
-<script src="js/d3.v7.min.js"></script>
-<script type="module">
-  import d3Interpolate from 'https://cdn.skypack.dev/d3-interpolate';
-</script>
-<script src="js/interactive.js"></script>
-<script src="js/model.js"></script>
+{% if js_libraries %}
+{% include "js-libraries" %}
+{% endif %}
 <body>
     <div class="bar header">
         <a class="navigation-element" href="/">home</a>
-        <a class="navigation-element" href="/interactive">interactive</a>
-        <a class="navigation-element" href="/resume">resume</a>
+        <a class="navigation-element" href="/interactive.html">interactive</a>
+        <a class="navigation-element" href="/resume.html">resume</a>
     </div>
     <div class="content">
-        <p>
-            Here's a piece.</br>
-        </p>
-        <input id="mal-input" class="text-box" type="text" placeholder="try me.." autocomplete="off">
-        <svg></svg>
+        {% for section in content.sections %}
+        <div class="content-section">
+            <div class="content-title">
+                <h3>{{ section.title }}</h3>
+                <div>{{ section.date }}</div>
+            </div>
+            </br>
+            {% for paragraph in section.paragraphs %}
+            <p class="content-paragraph">{{ paragraph }}</p>
+            <br>
+            {% endfor %}
+        </div>
+        {% endfor %}
     </div>
     <div class="bar footer">
         <a class="navigation-element" href="/">home</a>

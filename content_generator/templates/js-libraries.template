@@ -1,0 +1,7 @@
+<script src="js/jquery-3.6.2.min.js"></script>
+<script src="js/d3.v7.min.js"></script>
+<script type="module">
+  import d3Interpolate from 'https://cdn.skypack.dev/d3-interpolate';
+</script>
+<script src="js/interactive.js"></script>
+<script src="js/model.js"></script>
